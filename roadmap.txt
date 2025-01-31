@@ -1,1 +1,520 @@
 https://programming-24.mooc.fi/
+
+
+Programming terminology
+1. Statement
+A statement is a part of the program which executes something. It often, but not always, refers to a single command.
+
+For example, print("Hi!") is a statement which prints out a line of text. Likewise, number = 2 is a statement which assigns a value to a variable.
+
+A statement can also be more complicated. It can, for instance, contain other statements. The following statement spans three lines:
+
+if name == "Anna":
+    print("Hi!")
+    number = 2
+In the above case there are two statements (a print statement and an assignment statement) within a conditional statement.
+
+2. Block
+A block is a group of consecutive statements that are at the same level in the structure of the program. For example, the block of a conditional statement contains those statements which are executed only if the condition is true.
+
+if age > 17:
+    # beginning of the conditional block
+    print("You are of age!")
+    age = age + 1
+    print("You are now one year older...")
+    # end of the conditional block
+
+print("This here belongs to another block")
+In Python blocks are expressed by indenting all code in the block by the same amount of whitespace.
+
+4. Expression
+An expression is a bit of code that results in a determined data type. When the program is executed, the expression is evaluated so that it has a value that can then be used in the program.
+
+Here are a few examples of expressions:
+
+Expression	Value	Type	Python data type
+2 + 4 + 3	9	integer	int
+"abc" + "de"	"abcde"	string	str
+11 / 2	5.5	floating point number	float
+2 * 5 > 9	True	Boolean value	bool
+Because all expressions have a type, they can be assigned to variables:
+
+# the variable x is assigned the value of the expression 1 + 2
+x = 1 + 2
+
+Simple expressions can be assembled together to form more complicated expressions, for example with arithmetic operations:
+
+# the variable y is assigned the value of the expression '3 times x plus x squared'
+y = 3 * x + x**2
+
+5. Function
+A function executes some functionality. Functions can also take one or more arguments, which are data that can be fed to and processed by the function. Arguments are sometimes also referred to as parameters. There is a technical distinction between an argument and a parameter, but the words are often used interchangeably. For now it should suffice to remember that both terms refer to the idea of some data passed to the function.
+
+A function is executed when it is called. That is, when the function (and its arguments, if any) is mentioned in the code. The following statement calls the print function with the argument "this is an argument":
+
+print("this is an argument")
+
+Another function you've already used often is the input function, which asks the user for input. The argument of this function is the message that is shown to the user:
+
+name = input("Please type in your name: ")
+
+In this case the function also returns a value. After the function has been executed, the section of code where it was called is replaced by the value it returns; it is another expression that has now been evaluated. The function input returns a string value containing whatever the user typed in at the prompt. The value a function returns is often stored in a variable so that it can be used in the program later on.
+
+
+6. Data type
+Data type refers to the characteristics of any value present in the program. In the following bit of code the data type of the variable name is string or str, and the data type of the variable result is integer or int:
+
+name = "Anna"
+result = 100
+You can use the function type to find out the data type of any expression. An example of its use:
+
+print(type("Anna"))
+print(type(100))
+Sample output
+<class 'str'>
+<class 'int'>
+
+7. Syntax
+Similarly to natural languages, the syntax of a programming language determines how the code of a program should be written. Each programming language has its own specific syntax.
+
+The syntax of Python specifies, among other things, that the first line of an if statement should end in a colon character, and the block of the statement should be indented:
+
+if name == "Anna":
+    print("Hi!")
+If the syntactic rules of the programming language are not followed, there will be an error:
+
+if name == "Anna"
+    print("Hi!")
+Sample output
+  File "test.py", line 1
+    if name == "Anna"
+                    ^
+SyntaxError: invalid syntax
+
+8. Debugging
+If the syntax of the program is correct but the program still doesn't function as intended, there is a bug in the program.
+
+Bugs manifest in different ways. Some bugs cause an error during execution. For example, the following program
+
+x = 10
+y = 0
+result = x / y
+
+print(f"{x} divided by {y} is {result}")
+causes this error:
+
+Sample output
+ZeroDivisionError: integer division or modulo by zero on line 3
+
+The problem here is mathematical in nature: division by zero is not allowed, and this halts the execution of the program.
+
+Errors during execution are usually rather easy to fix, because the error message states the line of code causing the error. Of course the actual reason for the bug might be somewhere quite different than the line of code causing the error.
+
+Sometimes a bug in the program is revealed because the result the code produces is wrong. Discovering and locating this type of bug can be challenging. In the programming exercises on this course the tests are usually intended to reveal bugs of this type. Before a bug can be fixed, its cause must first be located.
+
+Programming jargon refers to discovering the causes of bugs as debugging. It is an extremely important skill in any programmer's toolbox. Professional programmers often spend more time debugging than writing fresh code.
+
+A simple yet effective way of debugging a program is adding debugging print statements to your code. Verifying the results of your code with print commands gives a quick confirmation the code does what you want it to do.
+
+The following is an attempt to solve one of the exercises from the previous section:
+
+hourly_wage = float(input("Hourly wage: "))
+hours = int(input("Hours worked: "))
+day = input("Day of the week: ")
+
+daily_wages = hourly_wage * hours
+if day == "sunday":
+    daily_wages * 2
+
+print(f"Daily wages: {daily_wages} euros")
+The program doesn't work quite right. Executing the tests prints out the following:
+
+Sample output
+FAIL: PythonEditorTest: test_sunday_1
+
+With input 20.0,6,Sunday correct wage 240.0 is not found in output Daily wages: 120.0 euros
+
+When debugging the exercises on this course, the first step is often checking how the program behaves with the input specified in the test that failed. Indeed the result isn't what was expected:
+
+Sample output
+Daily wages: 120.0 euros
+
+Debugging usually means running the program multiple times. It can come in handy to temporarily "hard-code" the problematic input, instead of asking the user for input each time. In this case hard-coding could look like this:
+
+# hourly_wage = float(input("Hourly wage: "))
+# hours = int(input("Hours worked: "))
+# day = input("Day of the week: ")
+hourly_wage = 20.0
+hours = 6
+day = "Sunday"
+
+daily_wages = hourly_wage * hours
+if day == "sunday":
+    daily_wages * 2
+
+print(f"Daily wages: {daily_wages} euros")
+
+The next step could be adding debugging print statements. The problematic part of the code is in the section dealing with Sundays, so let's add print commands before and after the line that should double the daily wages on Sundays:
+
+# ...
+
+daily_wages = hourly_wage * hours
+if day == "sunday":
+    print("wages before:", daily_wages)
+    daily_wages * 2
+    print("wages after doubling:", daily_wages)
+
+print(f"Daily wages: {daily_wages} euros")
+Running the code now reveals nothing - the debugging print statements aren't printed at all. It seems that the contents of the if block are never executed, so there must be a problem with the conditional statement. Let's try printing out the value of the Boolean expression:
+
+# ...
+
+daily_wages = hourly_wage * hours
+print("condition:", day == "sunday")
+if day == "sunday":
+    print("wages before:", daily_wages)
+    daily_wages * 2
+    print("wages after doubling:", daily_wages)
+
+print(f"Daily wages: {daily_wages} euros")
+Indeed, the value is False, so the contents of the if block are never executed:
+
+Sample output
+condition:  False
+Daily wages: 120.0 euros
+
+The issue must then lie within the condition of the if statement. As in so many situations in programming, the case of letters matters also in comparisons. Notice how the "sunday" in the Boolean expression has not been capitalized, but in the input it was. Let's fix this (in both the print command and the if statement):
+
+# ...
+
+daily_wages = hourly_wage * hours
+print("condition:", day == "Sunday")
+if day == "Sunday":
+    print("wages before:", daily_wages)
+    daily_wages * 2
+    print("wages after doubling:", daily_wages)
+
+print(f"Daily wages: {daily_wages} euros")
+Running this prints out the following:
+
+Sample output
+condition: True
+wages before: 120
+wages after doubling: 120
+Daily wages: 120.0 euros
+
+It seems the value stored in daily_wages is correct at first: hourly_wage = 20.0 and hours = 6, and 20.0 * 6 = 120.0. The command which is supposed to double the figure doesn't do so, however, so there must be a problem with the command. And indeed the command
+
+daily_wages * 2
+does double the value, but it doesn't store the new value anywhere. Let's change it so it also stores the new value:
+
+daily_wages *= 2
+Running the program again reveals that the printout at the end is now also correct:
+
+condition: True
+wages before: 120
+wages after doubling: 240
+Daily wages: 240.0 euros
+
+When the program has been fixed, remember to remove all debugging print statements and other code added for debugging purposes.
+
+This example was quite simple, and in such a short program one could probably figure out the bugs just by reading the code carefully. However, using debugging print statements is often a quick way to get a feeling for where the problem might lie. Print statements can be used to figure out which parts of the program seem to work correctly, so bug tracking efforts can be concentrated on the sections of code which are the most likely culprits.
+
+Debugging print statements are only one tool for debugging programs. We will come back to this subject later on during this course. You should now get into the habit of using debugging print statements to look for mistakes in your code. Programming professionals cannot get by without using them, so it is a very useful tool for beginners as well.
+
+Programming exercise:
+Fix the syntax
+
+
+Logical operators
+You can combine conditions with the logical operators and and or. The operator and specifies that all the given conditions must be true at the same time. The operator or specifies that at least one of the given conditions must be true.
+
+The following truth table contains the behaviour of these operators in different situations:
+
+a	b	a and b	a or b
+False	False	False	False
+True	False	False	True
+False	True	False	True
+True	True	True	True
+
+Sometimes it is necessary to know if something is not true. The operator not negates a condition:
+
+
+Simple loops
+We have now covered conditional structures in some detail. Another central technique in programming is repetition, or iteration. Together these form the fundamental control structures any programmer must master. They are called control structures because essentially they allow you to control which lines of code get executed when. While conditional structures allow you to choose between sections of code, iteration structures allow you to repeat sections of code. They are often called loops because they allow the program to "loop back" to some line that was already executed before. The process of executing one repetition of a loop is also referred to as an iteration of the loop.
+
+This section introduces a simple while loop. Its structure is similar to the conditional statements we already covered. In the next part we will delve into some more sophisticated examples.
+
+Let's have a look at a program which asks the user to type in a number and then prints out the number squared. This continues until the user types in -1.
+
+while True:
+    number = int(input("Please type in a number, -1 to quit: "))
+
+    if number == -1:
+        break
+
+    print(number ** 2)
+
+print("Thanks and bye!")
+Running the program could look like this:
+
+Sample output
+Please type in a number, -1 to quit: 2
+4
+Please type in a number, -1 to quit: 4
+16
+Please type in a number, -1 to quit: 10
+100
+Please type in a number, -1 to quit: -1
+Thanks and bye!
+
+As you can see above, the program asks for several numbers, thanks to the while statement in the program. When the user types in -1, the break command is executed, which exits the loop and execution continues from the first line after the while block.
+
+With loops, it is crucial that there is always a way to exit the loop at some point in the code, otherwise the repetition could go on forever. To illustrate this, let's change the above example a little:
+
+number = int(input("Please type in a number, -1 to quit: "))
+while True:
+    if number == -1:
+        break
+
+    print(number ** 2)
+
+print("Thanks and bye!")
+
+In this version the program asks the user to type in a number outside the loop. If the user types in any other number than -1, the loop is never exited from. This forms an infinite loop, which means the block of code within the loop is repeated endlessly:
+
+Sample output
+Please type in a number, -1 to quit: 2
+4
+4
+4
+4
+4
+4
+4
+4
+(continued ad infinitum...)
+
+Programming exercise:
+Shall we continue?
+
+
+
+Loops and helper variables
+Let's make the PIN checking example a bit more realistic. This version gives the user only three attempts at typing in a PIN.
+
+The program uses two helper variables. The variable attempts keeps track of how many times the user has typed in a PIN. The variable success is set to either True or False based on whether the user is successful in signing in.
+
+attempts = 0
+
+while True:
+    code = input("Please type in your PIN: ")
+    attempts += 1
+
+    if code == "1234":
+        success = True
+        break
+
+    if attempts == 3:
+        success = False
+        break
+
+    # this is printed if the code was incorrect AND there have been less than three attempts
+    print("Incorrect...try again")
+
+if success:
+    print("Correct PIN entered!")
+else:
+    print("Too many attempts...")
+Sample output
+Please type in your PIN: 0000
+Incorrect...try again
+Please type in your PIN: 1234
+Correct PIN entered!
+
+Sample output
+Please type in your PIN: 0000
+Incorrect...try again
+Please type in your PIN: 9999
+Incorrect...try again
+Please type in your PIN: 4321
+Too many attempts...
+
+The loop is exited either when the user types the correct PIN or if there have been too many attempts. The if statement after the loop checks the value of the variable success and prints out a message accordingly.
+
+Debugging print statements in loops
+Adding loops to programs also adds to the potential sources of bugs. It becomes even more important to master the use of debugging print statements as introduced in the first section of this part.
+
+Let's have a look at a program almost identical to the previous example, but with one crucial difference:
+
+attempts = 0
+
+while True:
+    code = input("Please type in your PIN: ")
+    attempts += 1
+
+    if attempts == 3:
+        success = False
+        break
+
+    if code == "1234":
+        success = True
+        break
+
+    print("Incorrect...try again")
+
+if success:
+    print("Correct PIN entered!")
+else:
+    print("Too many attempts...")
+This version acts strangely when the user types in the correct code on the third attempt:
+
+Sample output
+Please type in your PIN: 0000
+Incorrect...try again
+Please type in your PIN: 9999
+Incorrect...try again
+Please type in your PIN: 1234
+Too many attempts...
+
+So, let's try and find the cause by adding some strategic debugging print statements inside the loop:
+
+while True:
+    print("beginning of the while block:")
+    code = input("Please type in your PIN: ")
+    attempts += 1
+
+    print("attempts:", attempts)
+    print("condition1:", attempts == 3)
+    if attempts == 3:
+        success = False
+        break
+
+    print("code:", code)
+    print("condition2:", code == "1234")
+    if code == "1234":
+        success = True
+        break
+
+    print("Incorrect...try again")
+Sample output
+beginning of the while block:
+Please type in your PIN: 2233
+attempts: 1
+condition1: False
+code: 2233
+condition2: False
+Incorrect...try again
+beginning of the while block:
+Please type in your PIN: 4545
+attempts: 2
+condition1: False
+code: 4545
+condition2: False
+Incorrect...try again
+beginning of the while block:
+Please type in your PIN: 1234
+attempts: 3
+condition1: True
+Too many attempts...
+
+From the above printouts we can see that during the third iteration of the loop the condition of the first if statement is True, and the loop is exited. This iteration never gets to the second if statement, which checks whether the code was typed in correctly:
+
+  while True:
+    # ....
+
+    # this block is executed too early
+    if attempts == 3:
+        success = False
+        break
+
+    # the third iteration never gets this far
+    if code == "1234":
+        success = True
+        break
+The order of conditional statements, or of different branches within a conditional statement, is a common cause for bugs, especially in loops. Debugging print statements are often the simplest way of finding their cause.
+
+Concatenating strings with the + operator
+The above example with PIN checking used a helper variable attempts to keep track of how many times the user had tried to type in a code:
+
+attempts = 0
+
+while True:
+    code = input("Please type in your PIN: ")
+    attempts += 1
+    # ...
+The variable is set to zero outside the loop, and each iteration increases its value by one.
+
+A similar idea of incrementation works with string variables as well. The program could, for instance, keep track of all the PIN codes the user typed in:
+
+
+codes = ""
+attempts = 0
+
+while True:
+    code = input("Please type in your PIN: ")
+    attempts += 1
+    codes += code + ", "
+    # ...
+The helper variable is initialized to an empty string, that is, a string with no characters in it:
+
+codes = ""
+With each iteration the string gets longer, as the code the user typed in is added, along with a comma:
+
+    code = input("Please type in your PIN: ")
+    codes += code + ", "
+If the user types in the codes 1111 2222 1234, at the end of the program's execution the value of codes would be
+
+Sample output
+1111, 2222, 1234,
+
+
+
+Initialisation, condition and update
+To create a loop you'll often need to include three distinct steps: initialisation, condition, and updating the iteration variables.
+
+Initialisation refers to setting the initial value(s) of the variable(s) used within the condition of the loop. These are often called the iteration or iterator variables. This is performed before the loop is first entered. The condition defines for how long the loop is to be executed. It is set out at the very beginning of the loop. Finally, within each repetition of the loop the variables involved in the condition are updated, so that each iteration brings the loop one step closer to its conclusion. The following image illustrates these steps:
+
+
+
+Working with strings
+String operations
+Strings can be combined, or concatenated, with the + operator:
+
+begin = "ex"
+end = "ample"
+word = begin+end
+print(word)
+Sample output
+example
+
+The * operator can also be used with a string, when the other operand is an integer. The string operand is then repeated the number of times specified by the integer. For example this would work:
+
+word = "banana"
+print(word*3)
+Sample output
+bananabananabanana
+
+Using string operations together with a loop we can write a program which draws a pyramid:
+
+n = 10 # number of layers in the pyramid
+row = "*"
+
+while n > 0:
+    print(" " * n + row)
+    row += "**"
+    n -= 1
+This prints out the following:
+
+          *
+         ***
+        *****
+       *******
+      *********
+     ***********
+    *************
+   ***************
+  *****************
+ *******************
+The print command within the loop prints a line, which begins with n spaces, followed by whatever is stored in the variable row. Then two stars are added to the end of the variable row, and the value of the variable n is decreased by 1
+
