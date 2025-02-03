@@ -521,3 +521,117 @@ The print command within the loop prints a line, which begins with n spaces, fol
 
 
 Function:
+
+
+
+====================================================================================
+List Part 5:
+Using lists as parameters in functions
+When you pass a list as an argument to a function, you are passing a reference to that list. This means that the function can modify the list directly.
+
+The following function takes a list as an argument and adds a new item to the end of the list:
+
+def add_item(my_list: list):
+    new_item = 10
+    my_list.append(new_item)
+
+a_list = [1,2,3]
+print(a_list)
+add_item(a_list)
+print(a_list)
+Sample output
+
+[1, 2, 3]
+[1, 2, 3, 10]
+Notice the function add_item does not have a return value. It only changes the list it takes as an argument.
+
+Another way to implement this functionality would be to create a new list within the function, and return that:
+
+def add_item(my_list: list) -> list:
+    new_item = 10
+    my_list_copy = my_list[:]
+    my_list_copy.append(new_item)
+    return my_list_copy
+
+numbers = [1, 2, 3]
+numbers2 = add_item(numbers)
+
+print("original list:", numbers)
+print("new list:", numbers2)
+Sample output
+original list: [1, 2, 3]
+new list: [1, 2, 3, 10]
+
+If you aren't absolutely sure you understand what is happening in the code above, please go through it in the visualisation tool.
+
+
+[:] artinya slicing tanpa indeks awal dan indeks akhir jadi sama aja copy tapi tanpa for loop append.
+
+
+def print_sudoku(daftar: list):
+    for o in range(0, 9):
+        for i in range(0, 9, 3):
+            for j in range(0, 9, 3):
+                if daftar[i][j] == 0:
+                    print(" _", end="")
+                else:
+                    print(f" {daftar[i][j]}", end="")
+            print()
+        print()
+
+Bagaimana supaya menjadi seperti ini? Jangan ubah kode secara signifikan, tanpa komen, dan tetap simpel:
+_ _ _  _ _ _  _ _ _
+_ _ _  _ _ _  _ _ _
+_ _ _  _ _ _  _ _ _
+
+_ _ _  _ _ _  _ _ _
+_ _ _  _ _ _  _ _ _
+_ _ _  _ _ _  _ _ _
+
+_ _ _  _ _ _  _ _ _
+_ _ _  _ _ _  _ _ _
+_ _ _  _ _ _  _ _ _
+
+
+====================================================================================
+Dictionary
+
+Lists can be handy in many situations, but they are limited by the fact that the items are accessed through indexes; 0, 1, 2, and so forth. If you want to find some item in a list, you will either have to know its index, or, at worst, traverse through the entire list.
+
+Another central data structure in Python is the dictionary. In a dictionary, the items are indexed by keys. Each key maps to a value. The values stored in the dictionary can be accessed and changed using the key.
+
+Using a dictionary
+The following example shows you how the dictionary data structure works. Here is a simple dictionary from Finnish to English:
+
+my_dictionary = {}
+
+my_dictionary["apina"] = "monkey"
+my_dictionary["banaani"] = "banana"
+my_dictionary["cembalo"] = "harpsichord"
+
+print(len(my_dictionary))
+print(my_dictionary)
+print(my_dictionary["apina"])
+
+
+Sample output
+3
+{'apina': 'monkey', 'banaani': 'banana', 'cembalo': 'harpsichord'}
+monkey
+
+
+All keys in a dictionary must be immutable. So, a list cannot be used as a key, because it can be changed. For example, executing the following code causes an error:
+
+my_dictionary[[1, 2, 3]] = 5
+
+TypeError: unhashable type: 'list'
+
+
+Hash table;
+
+Notice the word 'unhashable' in the error message above. This is a reference to the inner workings of the dictionary data type. Python stores the contents of a dictionary in a hash table. Each key is reduced to a hash value, which determines where the key is stored in computer memory. The error message above indicates that a list cannot be processed into a hash value, so it cannot be used as a key in a dictionary.
+
+Unlike keys, the values stored in a dictionary can change, so any type of data is acceptable as a value. A value can also be mapped to more than one key in the same dictionary.	
+
+
+Kayak masih salah untuk penerapan si pergantian listnya. Jadi setelah perubahan atau edit atau pergantian dari indeks for loop di baris 0 dan 1 itu berhasil. Namun ketika menyentuh baris 2 dan seterusnya tidak berhasil. Mungkin ada di ukuran // 2 tapi saya tidak tahu
