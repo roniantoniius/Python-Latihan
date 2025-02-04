@@ -15,13 +15,13 @@ for baris in range(layer):
     # perulangan untuk kolom pada baris x
     for kolom in range(baris, ukuran - baris):
         # untuk awal
-        daftar[baris][kolom] = huruf[baris]
+        daftar[baris][kolom] = huruf[layer-baris-1]
 
         # untuk masukin di tengah
-        daftar[ukuran - baris - 1][kolom] = huruf[baris]
+        daftar[ukuran - baris - 1][kolom] = huruf[layer-baris-1]
 
         # untuk akhir
-        daftar[kolom][baris] = huruf[baris]
-        daftar[kolom][ukuran - baris - 1] = huruf[baris]
+        daftar[kolom][baris] = huruf[layer-baris-1]
+        daftar[kolom][ukuran - baris - 1] = huruf[layer-baris-1]
 for row in daftar:
     print("".join(row))
